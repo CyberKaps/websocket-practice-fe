@@ -1,16 +1,19 @@
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './App.css'
 
 function App() {
   const [socket, setSocket] = useState();
+  const inputRef = useRef();
 
   function sendMessage(){
     if (!socket){
       return
     }
+
+    const message = inputRef.current.value;
     //@ts-ignore
-    socket.send("ping")     
+    socket.send(message)     
 
   }
 
@@ -27,7 +30,7 @@ function App() {
   return (
     <>
       <div>
-        <input type='text' placeholder='message...'></input>
+        <input ref={inputRef} type='text' placeholder='message...'></input>
         <button onClick={sendMessage}>Send</button>
       </div>        
     </>
